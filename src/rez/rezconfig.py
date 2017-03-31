@@ -293,6 +293,14 @@ variant_select_mode = "version_priority"
 # foo-5+              | Same as range(foo-5+)
 package_filter = None
 
+# Change the default token used in Version objects - can be used to change the
+# way that versions are ordered.  May be the name of any Token subclass in
+# rez.vender.version.version.
+# For instance, you can set it to "TaggableAlphanumericVersionToken" to allow
+#  adding of "tags", specified after a double underscore, that will sort
+# BEFORE the untagged version - ie, so that 1.3__forBrian will come before 1.3
+version_token = "AlphanumericVersionToken"
+
 # Package orderers. One or more objects which can re-order the package's
 # priority when resolving - ie, if we know that a group of package versions
 # can all satisfy a request, this can affect which of those package versions is

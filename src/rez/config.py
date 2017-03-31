@@ -354,6 +354,7 @@ config_schema = Schema({
     "variant_select_mode":                          VariantSelectMode_,
     "package_filter":                               OptionalDictOrDictList,
     "package_orderers":                             PackageOrderers,
+    "version_token":                                Str,
     "new_session_popen_args":                       OptionalDict,
 
     # GUI settings
@@ -799,6 +800,16 @@ def get_module_root_config():
 
 # singleton
 config = Config._create_main_config()
+
+# Set version.default_make_token
+import rez.vendor.version.version
+if '_ContainsVersionIterator' in rez.vendor.version.version.__dict__:
+    rez.vendor.version.version.default_make_token = \
+        getattr(rez.vendor.version.version, config.version_token)
+else:
+    # we're in the middle of importing rez.vendor.version.version - if this is
+    # the case, we have code at the end of rez.vendor.version to set this...
+    pass
 
 
 # Copyright 2013-2016 Allan Johns.
